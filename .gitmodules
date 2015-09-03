@@ -1,0 +1,3 @@
+[submodule "Perlito"]
+	path = Perlito
+	url = https://github.com/fglock/Perlito
