@@ -20,11 +20,11 @@ This package is currently powered by [Perlito](https://github.com/fglock/Perlito
 
 #### bundling using perl
 
-... See [the CLI script](https://github.com/zenflow/PerlToJs/bin/perl-to-js.pl)
+... See [the CLI script](https://github.com/zenflow/PerlToJs/blob/master/bin/perl-to-js.pl)
 
 #### the perl-js interface
 
-... See [the perl dummy module](https://github.com/zenflow/PerlToJs/test/lib/Dummy/Simple.pm) and [the javascript test](https://github.com/zenflow/PerlToJs/test/assets/index.js)
+... See [the perl dummy module](https://github.com/zenflow/PerlToJs/blob/master/test/lib/Dummy/Simple.pm) and [the javascript test](https://github.com/zenflow/PerlToJs/blob/master/test/assets/index.js)
 
 
 ## requirements
