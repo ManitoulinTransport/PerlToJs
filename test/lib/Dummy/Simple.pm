@@ -9,4 +9,13 @@ sub square {
 	$a * $a
 }
 
+sub doubleEach {
+	my @input = @_;
+	my @output = ();
+	foreach my $item (@input){
+		push(@output, "$item$item");
+	}
+	@output;
+}
+
 1;

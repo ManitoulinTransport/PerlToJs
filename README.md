@@ -43,6 +43,7 @@ This package is currently powered by [Perlito](https://github.com/fglock/Perlito
 - translate data-types & functions!
 - give perl modules a way of knowing if its running in perl, node, or the browser ("isomorphic" ability)! 
 - use Carp
+- use CPAN standards for distribution packages
 - use some perl module depency manager
 - use node and or a headless browser for automated tests
 - use @INC for includes (rather than a separate @includes array) and implement @excludes and [additional] @includes

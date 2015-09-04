@@ -20,6 +20,22 @@ function isnt(actual, unexpected, message){
 	}
 }
 
+function isDeeply(actual, expected, message){
+	var actual_json = JSON.stringify(actual);
+	var expected_json = JSON.stringify(expected);
+	if (actual_json != expected_json){
+		throw new Error((message ? message + ': ' : '') + 'Expected '+ expected_json + ' but got ' + actual_json);
+	}
+}
+
+function isntDeeply(actual, unexpected, message){
+	var actual_json = JSON.stringify(actual);
+	var unexpected_json = JSON.stringify(unexpected);
+	if (actual == unexpected){
+		throw new Error((message ? message + ': ' : '') + 'Expected anything but '+ unexpected_json);
+	}
+}
+
 function throws(func, message){
 	try {
 		func();
