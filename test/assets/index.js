@@ -1,11 +1,19 @@
 var perl = PerlToJs();
 
+throws(function(){
+	perl.pkg('Does::Not::Exist');
+});
+
 var Dummy_Simple = perl.pkg('Dummy::Simple');
+
+throws(function(){
+	Dummy_Simple.sub('doesntexist');
+});
 
 var square = Dummy_Simple.sub('square');
 
-if ((square([2]) != 4) || (square([3]) != 9) || (square([4]) != 16)){
-	throw new Error;
+for (var i = 0; i < 10; i++){
+	is(square([i]), i*i);
 }
 
 console.log('passed all tests!');
