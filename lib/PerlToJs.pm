@@ -80,7 +80,8 @@ sub bundle {
  * Bundled with PerlToJs v$VERSION
  * See https://github.com/zenflow/PerlToJs
  */
-(function(){\n$runtime_js\n$modules_js\n$link_js\n})();";
+
+(function(){\n\"use strict\";\n$runtime_js\n$modules_js\n$link_js\n})();";
 
 }
 

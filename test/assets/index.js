@@ -1,6 +1,8 @@
 var perl = PerlToJs();
 
-var square = perl.get('Dummy::Simple', 'square');
+var Dummy_Simple = perl.pkg('Dummy::Simple');
+
+var square = Dummy_Simple.sub('square');
 
 if ((square([2]) != 4) || (square([3]) != 9) || (square([4]) != 16)){
 	throw new Error;

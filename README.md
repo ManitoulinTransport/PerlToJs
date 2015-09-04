@@ -41,7 +41,6 @@ This package is currently powered by [Perlito](https://github.com/fglock/Perlito
 ## todo
 
 - translate data-types & functions!
-- better currying in PerlToJs.js!
 - give perl modules a way of knowing if its running in perl, node, or the browser ("isomorphic" ability)! 
 - use Carp
 - use some perl module depency manager
