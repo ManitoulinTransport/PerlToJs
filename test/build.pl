@@ -2,18 +2,23 @@
 
 use File::Copy;
 use File::Spec;
+use File::Basename;
 
-mkdir "$0/../build";
-
+-d "$0/../build" or mkdir "$0/../build" or die $!;
 copy("$0/../../js/PerlToJs.js", "$0/../build/PerlToJs.js") or die $!;
-globCopy("$0/../assets", "$0/../build", "*");
+globCopy("$0/../assets", "$0/../build", "* */*");
 
 `perl $0/../../bin/perl-to-js.pl --include $0/../lib --module Dummy::Simple --output $0/../build/bundle.js`;
 
 sub globCopy {
 	my ($src, $dest, $glob) = @_;
-	for my $fn (glob("$src/$glob")){
-		my $rel_fn = File::Spec->abs2rel($fn, $src);
-		copy("$src/$rel_fn", "$dest/$rel_fn") or die $!;
+	my $abs_glob = join(' ', map {"$src/$_"} split(' ', $glob));
+	for my $abs_fn (glob($abs_glob)){
+		if (-f $abs_fn){
+			my $fn = File::Spec->abs2rel($abs_fn, $src);
+			my (undef, $dir, undef) = fileparse("$dest/$fn");
+			-d $dir or mkdir $dir or die $!;
+			copy("$src/$fn", "$dest/$fn") or die $!;
+		}
 	}
 }
