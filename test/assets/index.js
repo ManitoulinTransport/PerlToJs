@@ -1,5 +1,3 @@
-var perl = PerlToJs();
-
 throws(function(){
 	perl.pkg('Does::Not::Exist');
 }, 'throws error trying to get nonexistent package');

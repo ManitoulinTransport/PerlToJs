@@ -1,10 +1,10 @@
 (function(){
 	"use strict";
 	
-	// Global stuff ----------------------------------------
-	
 	var global = typeof window !== 'undefined' ? window : this;
 	global._perlito = global._perlito || {bundles: []};
+	
+	// conversion functions  ----------------------------------------
 	
 	var sub_default_options = {want: 'scalar'};
 	function perlSubToJsFunc(bundle, sub, options){
@@ -13,7 +13,7 @@
 		return function(args, options){
 			var sub_call_options = assign({}, sub_options, options || {});
 			checkSubOptions(sub_call_options);
-			var result = sub.call(null, args, sub_call_options.want == 'array' || sub_call_options.want == 'hash');
+			var result = sub(args, sub_call_options.want == 'array' || sub_call_options.want == 'hash');
 			return sub_call_options.want == 'hash' ? bundle.runtime.p5a_to_h(result) : result;
 		};
 	}
@@ -37,23 +37,9 @@
 		return to;
 	}
 	
-	// PerlToJs class ----------------------------------------
-	
-	var PerlToJs = function(){
-		if (!(this instanceof PerlToJs)){
-			return new PerlToJs();
-		}
-		this._pkgs = {};
-	};
-	
-	PerlToJs.prototype.pkg = function(pkg_name){
-		return this._pkgs[pkg_name] = this._pkgs[pkg_name] || new PerlPackage(this, pkg_name);
-	}
-	
 	// PerlPackage class ----------------------------------------
 	
-	var PerlPackage = function(parent, pkg_name){
-		this._parent = parent;
+	var PerlPackage = function(pkg_name){
 		this.name = pkg_name;
 		
 		// find the bundle this package is in
@@ -73,14 +59,24 @@
 	};
 	
 	PerlPackage.prototype.sub = function(sub_name, options){
-		if (typeof this._package[sub_name] != 'function'){
+		var sub = this._package[sub_name];
+		if (typeof sub != 'function'){
 			throw new Error("Could not find sub '" + sub_name + "' in package '" + this.name + "'");
 		}
-		return perlSubToJsFunc(this._bundle, this._package[sub_name], options);
+		return perlSubToJsFunc(this._bundle, sub, options);
+	};
+	
+	// `perl` object ----------------------------------------
+	
+	var pkgs = {};
+	var perl = {
+		pkg: function(pkg_name){
+			return pkgs[pkg_name] = pkgs[pkg_name] || new PerlPackage(pkg_name);
+		}
 	};
 	
 	// Export(s) ----------------------------------------
 	
-	global.PerlToJs = PerlToJs;
+	global.perl = perl;
 	
 })();
