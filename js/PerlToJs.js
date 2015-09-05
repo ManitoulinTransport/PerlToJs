@@ -1,10 +1,10 @@
 (function(){
 	"use strict";
 	
-	// Global stuff ----------------------------------------
-	
 	var global = typeof window !== 'undefined' ? window : this;
 	global._perlito = global._perlito || {bundles: []};
+	
+	// conversion functions  ----------------------------------------
 	
 	var sub_default_options = {want: 'scalar'};
 	function perlSubToJsFunc(bundle, sub, options){
@@ -37,23 +37,9 @@
 		return to;
 	}
 	
-	// PerlToJs class ----------------------------------------
-	
-	var PerlToJs = function(){
-		if (!(this instanceof PerlToJs)){
-			return new PerlToJs();
-		}
-		this._pkgs = {};
-	};
-	
-	PerlToJs.prototype.pkg = function(pkg_name){
-		return this._pkgs[pkg_name] = this._pkgs[pkg_name] || new PerlPackage(this, pkg_name);
-	}
-	
 	// PerlPackage class ----------------------------------------
 	
-	var PerlPackage = function(parent, pkg_name){
-		this._parent = parent;
+	var PerlPackage = function(pkg_name){
 		this.name = pkg_name;
 		
 		// find the bundle this package is in
@@ -79,8 +65,17 @@
 		return perlSubToJsFunc(this._bundle, this._package[sub_name], options);
 	};
 	
+	// `perl` object ----------------------------------------
+	
+	var pkgs = {};
+	var perl = {
+		pkg: function(pkg_name){
+			return pkgs[pkg_name] = pkgs[pkg_name] || new PerlPackage(pkg_name);
+		}
+	};
+	
 	// Export(s) ----------------------------------------
 	
-	global.PerlToJs = PerlToJs;
+	global.perl = perl;
 	
 })();
