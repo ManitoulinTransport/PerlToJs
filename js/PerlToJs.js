@@ -14,7 +14,7 @@
 			var sub_call_options = assign({}, sub_options, options || {});
 			checkSubOptions(sub_call_options);
 			var result = sub.call(null, args, sub_call_options.want == 'array' || sub_call_options.want == 'hash');
-			return sub_call_options.want == 'hash' ? arrayToHash(result) : result;
+			return sub_call_options.want == 'hash' ? bundle.runtime.p5a_to_h(result) : result;
 		};
 	}
 	
@@ -22,20 +22,6 @@
 		if (['scalar', 'array', 'hash'].indexOf(options.want) == -1){
 			throw new Error("'" + options.want + "' is not a valid option for 'want'");
 		}
-	}
-	
-	function arrayToHash(array){
-		// TODO: what should this function ACTUALLY be doing? check out some perlito transpiled code doing it
-		// my %hash = (1,2,3,4,5,6,7,8); print join(' ', %hash); # prints "1 2 3 4 7 8 5 6" ???
-		// and dont forget when you throw `undef` values in the mix...
-		if (array.length % 2 != 0){
-			throw new Error('cannot convert uneven-numbered array to hash... yet...');
-		}
-		var hash = {};
-		for (var i = 0; i < array.length / 2; i++){
-			hash[i*2] = hash[i*2+1];
-		}
-		return hash;
 	}
 	
 	// utilities ----------------------------------------

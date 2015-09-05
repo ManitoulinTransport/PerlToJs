@@ -20,10 +20,10 @@ for (var i = 0; i < 10; i++){
 var doubleEach = Dummy_Simple.sub('doubleEach', {want: 'array'});
 isDeeply(doubleEach(['a', '2', 3, 99]), ['aa', '22', '33', '9999']);
 
-// overriding wanted return type
+// cast as a scalar
 is(doubleEach(['a', '2', 3, 99], {want: 'scalar'}), 4);
 
-// simple function returning a hash
-// ...
+// cast as a hash
+isDeeply(doubleEach(['a', 'b', 'c', 'd'], {want: 'hash'}), {aa: 'bb', cc: 'dd'});
 
 console.log('passed all tests!');
