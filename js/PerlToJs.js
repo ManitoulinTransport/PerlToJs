@@ -75,6 +75,15 @@
 		}
 	};
 	
+	// `perl` object ----------------------------------------
+	
+	var pkgs = {};
+	var perl = {
+		pkg: function(pkg_name){
+			return pkgs[pkg_name] = pkgs[pkg_name] || new PerlPackage(pkg_name);
+		}
+	};
+	
 	// Export(s) ----------------------------------------
 	
 	global.perl = perl;
