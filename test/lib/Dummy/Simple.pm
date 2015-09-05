@@ -10,11 +10,9 @@ sub square {
 }
 
 sub doubleEach {
+	# TODO: `map {"$_$_"} @_;` should be sufficient
 	my @input = @_;
-	my @output = ();
-	foreach my $item (@input){
-		push(@output, "$item$item");
-	}
+	my @output = map {"$_$_"} @input;
 	@output;
 }
 
