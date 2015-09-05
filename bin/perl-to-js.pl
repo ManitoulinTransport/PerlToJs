@@ -9,11 +9,10 @@ use lib "$0/../../lib";
 use PerlToJs;
 
 # Get input parameters
-my ($includes, $modules, $debug, $output_file) = ([], [], 0, '');
+my ($includes, $modules, $output_file) = ([], [], '');
 GetOptions(
 	'include=s' => $includes,
 	'modules=s' => $modules,
-	'debug' => \$debug,
 	'output=s' => \$output_file,
 );
 
@@ -21,7 +20,6 @@ GetOptions(
 my $output = PerlToJs::bundle(
 	includes => $includes,
 	modules => $modules,
-	debug => $debug,
 );
 
 # Write output

@@ -8,9 +8,7 @@ mkdir "$0/../build";
 copy("$0/../../js/PerlToJs.js", "$0/../build/PerlToJs.js") or die $!;
 globCopy("$0/../assets", "$0/../build", "*");
 
-`perl $0/../../bin/perl-to-js.pl --include $0/../lib --module Dummy::Simple --output $0/../build/bundle.js --debug`;
-`perl $0/../../bin/perl-to-js.pl --include $0/../lib --module Dummy::Simple --output $0/../build/bundle.min.js`;
-
+`perl $0/../../bin/perl-to-js.pl --include $0/../lib --module Dummy::Simple --output $0/../build/bundle.js`;
 
 sub globCopy {
 	my ($src, $dest, $glob) = @_;

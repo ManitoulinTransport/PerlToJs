@@ -16,7 +16,7 @@ This package is currently powered by [Perlito](https://github.com/fglock/Perlito
 
 #### bundling using the CLI
 
-`$ perl-to-js --include /path/to/include --module Some::Thing --module Other::Thing --debug --output bundle.js`
+`$ perl-to-js.pl --include /path/to/include --module Some::Thing --module Other::Thing --output bundle.js`
 
 #### bundling using perl
 
@@ -30,7 +30,6 @@ This package is currently powered by [Perlito](https://github.com/fglock/Perlito
 ## requirements
 
 * Perl5 v5.10.1 or higher
-* JavaScript::Minifier::XS v0.05 or higher
 
 ## changelog
 
@@ -44,10 +43,10 @@ This package is currently powered by [Perlito](https://github.com/fglock/Perlito
 - give perl modules a way of knowing if its running in perl, node, or the browser ("isomorphic" ability)! 
 - use Carp
 - use CPAN standards for distribution packages
-- use some perl module depency manager
 - use node and or a headless browser for automated tests
 - use @INC for includes (rather than a separate @includes array) and implement @excludes and [additional] @includes
 - cache the Perlito runtime & transpiled modules, for persistent consumers (i.e. web apps, as opposed to the one-off command-line interface)
+
 - add support for expanding `use` statements (either here or in Perlito)
 - move Perlito runtime from each bundle to the singular PerlToJs runtime
 - support commonj-esque (i.e. node & browserify) javascript module format

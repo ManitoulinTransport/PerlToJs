@@ -20,9 +20,6 @@ our $VERSION = '0.0.1';
 use Cwd;
 use File::Slurp;
 
-# CPAN modules
-use JavaScript::Minifier::XS 0.05;
-
 # Perlito modules
 use lib "$0/../../Perlito/src5/lib";
 use Perlito5::Javascript2::Runtime;
@@ -66,13 +63,6 @@ sub bundle {
 	
 	# Get link javascript
 	my $link_js = read_file("$0/../../js/link.js");
-
-	# Minify all javascript
-	unless ($debug){
-		$modules_js = JavaScript::Minifier::XS::minify($modules_js);
-		$runtime_js = JavaScript::Minifier::XS::minify($runtime_js);
-		$link_js = JavaScript::Minifier::XS::minify($link_js);
-	}
 
 	# Compose output
 "/**
