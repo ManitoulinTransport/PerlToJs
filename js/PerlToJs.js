@@ -7,15 +7,17 @@
 	// conversion functions  ----------------------------------------
 	
 	var sub_default_options = {want: 'scalar'};
-	function perlSubToJsFunc(bundle, sub, options){
+	function perlSubToJsFunc(bundle, perlito_sub, options){
 		var sub_options = assign({}, sub_default_options, options || {});
 		checkSubOptions(sub_options);
-		return function(args, options){
+		var sub = function(args, options){
 			var sub_call_options = assign({}, sub_options, options || {});
 			checkSubOptions(sub_call_options);
-			var result = sub(args, sub_call_options.want == 'array' || sub_call_options.want == 'hash');
+			var result = perlito_sub(args, sub_call_options.want == 'array' || sub_call_options.want == 'hash');
 			return sub_call_options.want == 'hash' ? bundle.runtime.p5a_to_h(result) : result;
 		};
+		sub._perlito_sub = perlito_sub;
+		return sub;
 	}
 	
 	function checkSubOptions(options){
@@ -54,25 +56,16 @@
 			throw new Error("Could not find package '" + pkg_name + "' in any of " + global._perlito.bundles.length + " loaded bundles");
 		}
 		
-		// convenience reference to the Perlito package
-		this._package = this._bundle.pkgs[this.name];
+		// convenience reference(s)
+		this._perlito_package = this._bundle.pkgs[this.name];
 	};
 	
 	PerlPackage.prototype.sub = function(sub_name, options){
-		var sub = this._package[sub_name];
-		if (typeof sub != 'function'){
+		var perlito_sub = this._perlito_package[sub_name];
+		if (typeof perlito_sub != 'function'){
 			throw new Error("Could not find sub '" + sub_name + "' in package '" + this.name + "'");
 		}
-		return perlSubToJsFunc(this._bundle, sub, options);
-	};
-	
-	// `perl` object ----------------------------------------
-	
-	var pkgs = {};
-	var perl = {
-		pkg: function(pkg_name){
-			return pkgs[pkg_name] = pkgs[pkg_name] || new PerlPackage(pkg_name);
-		}
+		return perlSubToJsFunc(this._bundle, perlito_sub, options);
 	};
 	
 	// `perl` object ----------------------------------------

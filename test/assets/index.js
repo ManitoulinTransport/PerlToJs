@@ -21,8 +21,8 @@ var cases = {
 				options: {want: 'array'},
 				cases: [
 					{args: ['a', 'bb', 333, 4444], expected: ['aa', 'bbbb', '333333', '44444444']},
-					{args: ['a', 'b', 'c', 'd'], options: {want: 'scalar'}, expected: 4},
-					{args: ['a', 'b', 'c', 'd'], options: {want: 'hash'}, expected: {aa: 'bb', cc: 'dd'}}
+					{args: ['a', 'bb', 333, 4444], options: {want: 'scalar'}, expected: 4},
+					{args: ['a', 'bb', 333, 4444], options: {want: 'hash'}, expected: {aa: 'bbbb', '333333': '44444444'}}
 				]
 			}
 		}
