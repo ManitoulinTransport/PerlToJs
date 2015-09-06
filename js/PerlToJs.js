@@ -13,10 +13,12 @@
 		var sub = function(args, options){
 			var sub_call_options = assign({}, sub_options, options || {});
 			checkSubOptions(sub_call_options);
-			var result = perlito_sub(args, sub_call_options.want == 'array' || sub_call_options.want == 'hash');
+			var result = perlito_sub(args || [], sub_call_options.want == 'array' || sub_call_options.want == 'hash');
 			return sub_call_options.want == 'hash' ? bundle.runtime.p5a_to_h(result) : result;
 		};
+		sub._bundle = bundle;
 		sub._perlito_sub = perlito_sub;
+		sub._options = sub_options;
 		return sub;
 	}
 	
