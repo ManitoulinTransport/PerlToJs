@@ -9,3 +9,5 @@ use Cwd;
 
 # Constants
 use constant BASE_PATH => Cwd::abs_path("$INC{'PerlToJs/Constants.pm'}../../../..");
+
+1;
