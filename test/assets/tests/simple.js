@@ -24,3 +24,5 @@ testPackage('Dummy::Simple', function(testSub){
 	});
 });
 */
+
+console.log('all tests in simple.js passed!');
