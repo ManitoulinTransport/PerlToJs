@@ -19,35 +19,27 @@ our $VERSION = '0.0.1';
 # Perl core modules
 use Carp;
 use Cwd;
-use File::Slurp;
-
-# Perlito modules
-use lib "$0/../../Perlito/src5/lib";
-use Perlito5::Javascript2::Runtime;
-use Perlito5::Javascript2::Array;
-use Perlito5::Javascript2::CORE;
-use Perlito5::Javascript2::IO;
-use Perlito5::Javascript2::Sprintf;
 
 # PerlToJs modules
 use PerlToJs::Helpers;
+use PerlToJs::Constants;
+use PerlToJs::Static;
 
 sub bundle {
 	my %params = @_;
 	my @includes = @{$params{includes}};
 	my @modules = @{$params{modules}};
-	my $debug = $params{debug};
 	
 	# Process input parameters
 	croak "No module(s) were specified" unless @modules;
-	unshift(@includes, "$0/../../Perlito/src5/lib");
+	unshift(@includes, PerlToJs::Constants::BASE_PATH . '/Perlito/src5/lib');
 	for (my $i = 0; $i < scalar @includes; $i++){
 		-d $includes[$i] or croak "Include path '$includes[$i]' doesn't exist";
 		$includes[$i] = Cwd::abs_path($includes[$i]);
 	}
 	
 	# Compile each perl module to javascript
-	my $base_command = "perl $0/../../Perlito/perlito5.pl -Cjs --noexpand_use " . join('', map {"-I$_ "} @includes);
+	my $base_command = 'perl ' . PerlToJs::Constants::BASE_PATH . '/Perlito/perlito5.pl -Cjs --noexpand_use ' . join('', map {"-I$_ "} @includes);
 	my $modules_js = join("\n", map {
 		my $input_file = eval { PerlToJs::Helpers::findModule($_, \@includes) };
 		croak $@ if $@;
@@ -56,21 +48,13 @@ sub bundle {
 		$module_js . '; ';
 	} @modules);
 
-	# Get runtime javascript
-	my $runtime_js = join("\n", (
-		Perlito5::Javascript2::Runtime::emit_javascript2(),
-		Perlito5::Javascript2::Array::emit_javascript2(),
-		Perlito5::Javascript2::CORE::emit_javascript2(),
-		Perlito5::Javascript2::IO::emit_javascript2(),
-		Perlito5::Javascript2::Sprintf::emit_javascript2(),
-	));
-	
-	# Get link javascript
-	my $link_js = read_file("$0/../../js/link.js");
+	# Get static javascript
+	my $runtime_js = PerlToJs::Static::getRuntimeJs();
+	my $link_js = PerlToJs::Static::getLinkJs();
 
 	# Compose output
 "/**
- * " . join(', ', @modules) ."
+ * " . join(', ', @modules) . "
  * Bundled with PerlToJs v$VERSION
  * See https://github.com/zenflow/PerlToJs
  */

@@ -1,11 +1,12 @@
 #!/usr/bin/perl -w
 
 # Perl core modules
+use Cwd;
 use Getopt::Long;
 use File::Slurp;
 
 # PerlToJs modules
-use lib "$0/../../lib";
+use lib Cwd::abs_path("$0/../../lib");
 use PerlToJs;
 
 # Get input parameters
@@ -33,7 +34,11 @@ Options:
 }
 
 if ($show_version){
-	print "\nPerlToJs v$PerlToJs::VERSION\n\nCopyright (c) 2015 Matthew Francis Brunetti, Manitoulin Transport Inc., et al\n";
+	print "
+PerlToJs v$PerlToJs::VERSION
+
+Copyright (c) 2015 Matthew Francis Brunetti, Manitoulin Transport Inc., et al
+";
 	exit;
 }
 
