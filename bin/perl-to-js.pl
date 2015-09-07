@@ -38,6 +38,7 @@ if ($show_version){
 PerlToJs v$PerlToJs::VERSION
 
 Copyright (c) 2015 Matthew Francis Brunetti, Manitoulin Transport Inc., et al
+
 ";
 	exit;
 }
