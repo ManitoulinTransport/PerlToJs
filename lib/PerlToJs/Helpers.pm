@@ -27,7 +27,7 @@ sub findModule {
 		}
 	}
 	
-	die "Can't locate '$module_path' in includes (includes contains " . join(' ', @$includes) . ")";
+	die "Can't locate '$module_path' in includes (includes contains " . join(' ', @$includes) . ")\n";
 }
 
 1;

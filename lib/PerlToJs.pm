@@ -17,6 +17,7 @@ our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our $VERSION = '0.0.1';
 
 # Perl core modules
+use Carp;
 use Cwd;
 use File::Slurp;
 
@@ -38,18 +39,21 @@ sub bundle {
 	my $debug = $params{debug};
 	
 	# Process input parameters
-	die "No module(s) were specified" unless @modules;
+	croak "No module(s) were specified" unless @modules;
 	unshift(@includes, "$0/../../Perlito/src5/lib");
 	for (my $i = 0; $i < scalar @includes; $i++){
-		-d $includes[$i] or die "Include path '$includes[$i]' doesn't exist";
+		-d $includes[$i] or croak "Include path '$includes[$i]' doesn't exist";
 		$includes[$i] = Cwd::abs_path($includes[$i]);
 	}
 	
 	# Compile each perl module to javascript
 	my $base_command = "perl $0/../../Perlito/perlito5.pl -Cjs --noexpand_use " . join('', map {"-I$_ "} @includes);
 	my $modules_js = join("\n", map {
-		my $input_file = PerlToJs::Helpers::findModule($_, \@includes);
-		`$base_command$input_file` . '; '
+		my $input_file = eval { PerlToJs::Helpers::findModule($_, \@includes) };
+		croak $@ if $@;
+		my $module_js =  `$base_command$input_file`;
+		die "Command exited with error code $?" if $?;
+		$module_js . '; ';
 	} @modules);
 
 	# Get runtime javascript
