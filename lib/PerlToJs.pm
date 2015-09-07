@@ -4,16 +4,6 @@ use 5.010001;
 use strict;
 use warnings;
 
-require Exporter;
-
-our @ISA = qw(Exporter);
-
-our %EXPORT_TAGS = ( 'all' => [ qw(
-	bundle
-) ] );
-
-our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
-
 our $VERSION = '0.0.1';
 
 # Perl core modules
