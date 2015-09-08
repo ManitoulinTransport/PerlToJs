@@ -15,7 +15,7 @@ use PerlToJs::Constants;
 use PerlToJs::Transpile;
 use PerlToJs::Static;
 
-sub bundle {
+sub getBundleJs {
 	my %params = @_;
 	my @includes = @{$params{includes}};
 	my @modules = @{$params{modules}};
@@ -45,6 +45,15 @@ sub bundle {
 
 (function(){\n\"use strict\";\n$runtime_js\n$modules_js\n$link_js\n})();";
 
+}
+
+sub getInterfaceJs {
+"/**
+ * PerlToJs v$VERSION interface
+ * See https://github.com/zenflow/PerlToJs
+ */
+
+" . PerlToJs::Static::getInterfaceJs();
 }
 
 1;

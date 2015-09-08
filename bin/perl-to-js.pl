@@ -9,45 +9,49 @@ use File::Slurp;
 use lib Cwd::abs_path("$0/../../lib");
 use PerlToJs;
 
-# Get input parameters
-my ($includes, $modules, $output_file, $show_help, $show_version) = ([], [], '', 0, 0);
+# Get options
+my ($includes, $output_file) = ([], '');
 GetOptions(
 	'include=s' => $includes,
-	'modules=s' => $modules,
 	'output=s' => \$output_file,
-	'help' => \$show_help,
-	'version' => \$show_version,
 );
 
-if ($show_help){
-	print "
-Usage: perl-to-js.pl [options]
+# Get command & arguments
+my $command = $ARGV[0];
+my @arguments = @ARGV[1 .. @ARGV-1];
+
+# Define commands
+my %commands = (
+	bundle => sub {
+		PerlToJs::getBundleJs(
+			includes => $includes,
+			modules => \@arguments,
+		);
+	},
+	interface => sub {
+		PerlToJs::getInterfaceJs();
+	},
+	help => sub {
+		"
+Usage:
+  perl-to-js.pl bundle <module>... [--include <directory>]... [--output <file>]
+  perl-to-js.pl interface [--output <file>]
+  perl-to-js.pl help [--output <file>]
+  perl-to-js.pl version [--output <file>]
 
 Options:
-  --include	specify an \@INC directory (more than one is allowed)
-  --module	specify a module to include in the bundle (at least one is required)
-  --output	specify the file to write to [default: STDOUT]
-  --help	show this screen
-  --version	show the version
+  --include <directory>		an \@INC directory (any number allowed)
+  --output <file>		the file to write to [default: STDOUT]
 ";
-	exit;
-}
-
-if ($show_version){
-	print "
-PerlToJs v$PerlToJs::VERSION
-
-Copyright (c) 2015 Matthew Francis Brunetti, Manitoulin Transport Inc., et al
-
-";
-	exit;
-}
-
-# Do bundle
-my $output = PerlToJs::bundle(
-	includes => $includes,
-	modules => $modules,
+	},
+	version => sub {
+		$PerlToJs::VERSION
+	},
 );
+
+# Run command
+die "Unknown command '$command'\n" unless (exists $commands{$command});
+my $output = &{$commands{$command}}();
 
 # Write output
 if ($output_file){

@@ -17,14 +17,17 @@ This package is currently powered by [Perlito](https://github.com/fglock/Perlito
 #### bundling using the CLI
 
 ```
-Usage: perl-to-js.pl [options]
+$ perl-to-js.pl help
+
+Usage:
+  perl-to-js.pl bundle <module>... [--include <directory>]... [--output <file>]
+  perl-to-js.pl interface [--output <file>]
+  perl-to-js.pl help [--output <file>]
+  perl-to-js.pl version [--output <file>]
 
 Options:
-  --include     specify an @INC directory (more than one is allowed)
-  --module      specify a module to include in the bundle (at least one is required)
-  --output      specify the file to write to [default: STDOUT]
-  --help        show this screen
-  --version     show the version
+  --include <directory>         an @INC directory (any number allowed)
+  --output <file>               the file to write to [default: STDOUT]
 ```
 
 #### bundling using perl

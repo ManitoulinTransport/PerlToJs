@@ -4,17 +4,6 @@ use 5.010001;
 use strict;
 use warnings;
 
-require Exporter;
-
-our @ISA = qw(Exporter);
-
-our %EXPORT_TAGS = ( 'all' => [ qw(
-	getRuntimeJs
-	getLinkJs
-) ] );
-
-our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
-
 # Perl core modules
 use File::Slurp;
 
@@ -49,6 +38,14 @@ sub getLinkJs {
 		$link_js = read_file(PerlToJs::Constants::BASE_PATH . '/js/link.js');
 	}
 	$link_js;
+}
+
+my $interface_js = '';
+sub getInterfaceJs {
+	unless ($interface_js){
+		$interface_js = read_file(PerlToJs::Constants::BASE_PATH . '/js/interface.js');
+	}
+	$interface_js;
 }
 
 1;
