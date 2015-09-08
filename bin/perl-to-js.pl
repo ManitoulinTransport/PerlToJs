@@ -17,8 +17,8 @@ GetOptions(
 );
 
 # Get command & arguments
-my $command = $ARGV[0];
-my @arguments = @ARGV[1 .. @ARGV-1];
+my $command = $ARGV[0] or die "No command given\n";
+my @arguments = @ARGV[1 .. $#ARGV];
 
 # Define commands
 my %commands = (
