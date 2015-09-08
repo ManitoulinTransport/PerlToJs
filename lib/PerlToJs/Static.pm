@@ -18,9 +18,9 @@ use Perlito5::Javascript2::CORE;
 use Perlito5::Javascript2::IO;
 use Perlito5::Javascript2::Sprintf;
 
-my $runtime_js = '';
+my $runtime_js = undef;
 sub getRuntimeJs {
-	unless ($runtime_js){
+	unless (defined $runtime_js){
 		$runtime_js = join("\n", (
 			Perlito5::Javascript2::Runtime::emit_javascript2(),
 			Perlito5::Javascript2::Array::emit_javascript2(),
@@ -32,17 +32,17 @@ sub getRuntimeJs {
 	$runtime_js;
 }
 
-my $link_js = '';
+my $link_js = undef;
 sub getLinkJs {
-	unless ($link_js){
+	unless (defined $link_js){
 		$link_js = read_file(PerlToJs::Constants::BASE_PATH . '/js/link.js');
 	}
 	$link_js;
 }
 
-my $interface_js = '';
+my $interface_js = undef;
 sub getInterfaceJs {
-	unless ($interface_js){
+	unless (defined $interface_js){
 		$interface_js = read_file(PerlToJs::Constants::BASE_PATH . '/js/interface.js');
 	}
 	$interface_js;

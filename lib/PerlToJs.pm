@@ -47,13 +47,18 @@ sub getBundleJs {
 
 }
 
+my $interface_js = undef;
 sub getInterfaceJs {
+	unless (defined $interface_js){
+		$interface_js = 
 "/**
  * PerlToJs v$VERSION interface
  * See https://github.com/zenflow/PerlToJs
  */
 
 " . PerlToJs::Static::getInterfaceJs();
+	}
+	$interface_js;
 }
 
 1;
