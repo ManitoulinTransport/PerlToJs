@@ -17,8 +17,8 @@ use PerlToJs::Static;
 
 sub getBundleJs {
 	my %params = @_;
-	my @includes = @{$params{includes}};
-	my @modules = @{$params{modules}};
+	my @includes = @{$params{includes} or []};
+	my @modules = @{$params{modules} or []};
 	
 	# Process input parameters
 	croak "No module(s) were specified" unless @modules;
