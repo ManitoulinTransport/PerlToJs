@@ -7,6 +7,11 @@ global._perlito.bundles.push({
 		p5a_to_h: p5a_to_h,
 		p5list_to_a: p5list_to_a,
 		p5context: p5context,
+		p5HashRef: p5HashRef,
+		p5ArrayRef: p5ArrayRef,
+		p5ScalarRef: p5ScalarRef,
+		p5GlobRef: p5GlobRef,
+		p5CodeRef: p5CodeRef,
 	}
 });
 

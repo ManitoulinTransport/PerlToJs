@@ -7,20 +7,23 @@
 	// conversion functions  ----------------------------------------
 	
 	var sub_default_options = {want: 'scalar'};
-	function perlSubToJsFunc(bundle, perlito_sub, options){
+	function decodeSub(bundle, perlito_sub, options){
 		var sub_options = assign({}, sub_default_options, options || {});
 		checkSubOptions(sub_options);
 		var sub = function(args, options){
-			args = typeof args == 'object' ? args : [args];
 			var sub_call_options = assign({}, sub_options, options || {});
 			checkSubOptions(sub_call_options);
+			args = (typeof args == 'function') && [encodeSub(bundle, args)]
+				|| (args instanceof Array) && encodeArray(bundle, args) 
+				|| (args instanceof Object) && encodeHash(bundle, args) 
+				|| [encodeScalar(bundle, args)];
 			switch (sub_call_options.want){
 				case 'scalar':
-					return bundle.runtime.p5context([perlito_sub(args, 0)], 0);
+					return decodeScalar(bundle, bundle.runtime.p5context([perlito_sub(args, 0)], 0));
 				case 'array':
-					return bundle.runtime.p5list_to_a(perlito_sub(args, 1));
+					return decodeArray(bundle, bundle.runtime.p5list_to_a(perlito_sub(args, 1)));
 				case 'hash':
-					return bundle.runtime.p5a_to_h(bundle.runtime.p5list_to_a(perlito_sub(args, 1)));
+					return decodeHash(bundle, bundle.runtime.p5a_to_h(bundle.runtime.p5list_to_a(perlito_sub(args, 1))));
 			}
 		};
 		sub._bundle = bundle;
@@ -33,6 +36,76 @@
 		if (['scalar', 'array', 'hash'].indexOf(options.want) == -1){
 			throw new Error("'" + options.want + "' is not a valid option for 'want'");
 		}
+	}
+	
+	function decodeScalar(bundle, input){
+		if (input instanceof bundle.runtime.p5HashRef){
+			return decodeHash(bundle, input._hash_);
+		} else if (input instanceof bundle.runtime.p5ArrayRef){
+			return decodeArray(bundle, input._array_);
+		} else if (input instanceof bundle.runtime.p5ScalarRef){
+			return decodeScalar(bundle, input._scalar_);
+		} else if (input instanceof bundle.runtime.p5GlobRef){
+			throw new Error('globrefs are not yet supported');
+		} else if (input instanceof bundle.runtime.p5CodeRef){
+			return decodeSub(bundle, input._code_);
+		} else {
+			return input;
+		}
+	}
+	
+	function decodeArray(bundle, input){
+		var output = [];
+		for (var i = 0; i < input.length; i++){
+			output[i] = decodeScalar(bundle, input[i]);
+		}
+		return output;
+	}
+	
+	function decodeHash(bundle, input){
+		var output = {};
+		for (var key in input){
+			if (input.hasOwnProperty(key)){
+				output[key] = decodeScalar(bundle, input[key]);
+			}
+		}
+		return output;
+	}
+	
+	function encodeSub(bundle, input){
+		return input._perlito_sub || function(args, want_array){
+			throw new Error('passing javascript functions to perl is not yet supported');
+		};
+	}
+	
+	function encodeScalar(bundle, input){
+		if (typeof input == 'function'){
+			return new bundle.runtime.p5CodeRef(encodeSub(bundle, input));
+		} else if (input instanceof Array){
+			return new bundle.runtime.p5ArrayRef(encodeArray(bundle, input));
+		} else if (input instanceof Object){
+			return new bundle.runtime.p5HashRef(encodeHash(bundle, input));
+		} else {
+			return input;
+		}
+	}
+	
+	function encodeArray(bundle, input){
+		var output = [];
+		for (var i = 0; i < input.length; i++){
+			output[i] = encodeScalar(bundle, input[i]);
+		}
+		return output;
+	}
+	
+	function encodeHash(bundle, input){
+		var output = {};
+		for (var key in input){
+			if (input.hasOwnProperty(key)){
+				output[key] = encodeScalar(bundle, input[key]);
+			}
+		}
+		return output;
 	}
 	
 	// utilities ----------------------------------------
@@ -74,7 +147,7 @@
 		if (typeof perlito_sub != 'function'){
 			throw new Error("Could not find sub '" + sub_name + "' in package '" + this.name + "'");
 		}
-		return perlSubToJsFunc(this._bundle, perlito_sub, options);
+		return decodeSub(this._bundle, perlito_sub, options);
 	};
 	
 	// `perl` object ----------------------------------------
