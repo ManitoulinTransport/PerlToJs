@@ -11,10 +11,17 @@
 		var sub_options = assign({}, sub_default_options, options || {});
 		checkSubOptions(sub_options);
 		var sub = function(args, options){
+			args = typeof args == 'object' ? args : [args];
 			var sub_call_options = assign({}, sub_options, options || {});
 			checkSubOptions(sub_call_options);
-			var result = perlito_sub(args || [], sub_call_options.want == 'array' || sub_call_options.want == 'hash');
-			return sub_call_options.want == 'hash' ? bundle.runtime.p5a_to_h(result) : result;
+			switch (sub_call_options.want){
+				case 'scalar':
+					return bundle.runtime.p5context([perlito_sub(args, 0)], 0);
+				case 'array':
+					return bundle.runtime.p5list_to_a(perlito_sub(args, 1));
+				case 'hash':
+					return bundle.runtime.p5a_to_h(bundle.runtime.p5list_to_a(perlito_sub(args, 1)));
+			}
 		};
 		sub._bundle = bundle;
 		sub._perlito_sub = perlito_sub;
