@@ -1,5 +1,5 @@
 # PerlToJs
-Perl5-to-Javascript transpiler and interface
+Perl5 modules in javascript
 
 ## purpose
 
@@ -54,7 +54,6 @@ Options:
 - use CPAN standards for distribution packages
 - add notes in readme about getting set up
 - Dummy::ComplexData and Dummy::Subs
-
 - add PerlObject class
 - give perl modules a way of knowing if its running in perl, node, or the browser ("isomorphic" ability)! 
 - use node and or a headless browser for automated tests, use Travis CI
