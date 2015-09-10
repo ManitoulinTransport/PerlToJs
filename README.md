@@ -5,9 +5,9 @@ Perl5 modules in javascript
 
 To make possible the use of Perl5 modules in Javascript code.
 
-This is desirable for two reasons:
+This is desirable for at least two reasons (in context of web development):
 
-1. Some functionality (e.g. validating forms, rendering templates) can be shared between the server and the browser, without the need to write and maintain it in two separate files in two separate languages
+1. Some functionality (e.g. validating forms, rendering templates) can be shared between the server and the browser/client, without the need to write and maintain it in two separate files in two separate languages
 2. Server-side functionality can be written in perl and run on any server-side javascript platform, such as nodejs, iojs, or meteor. This could be a legacy perl codebase, or complex functionality that would be longwinded to write and difficult to maintain in javascript.
 
 This package is currently powered by [Perlito](https://github.com/fglock/Perlito), which transpiles perl to js (among other languages) but lacks a practical interface for using your transpiled code in javascript.
