@@ -51,7 +51,9 @@ Options:
 
 ## todo
 
-- make: one `encode` function to tie together encodeScalar+encodeArray+encodeHash+encodeSub... same for `decode`
+- `want: 'auto'`: executes in list context and simply returns the element if theres only one
+- link singlar Perlito runtime into bundle using new bundle_prefix.js (link.js -> bundle_postfix.js)
+- use generic PerlPackage.prototype.get (as opposed to PerlPackage.prototype.sub)
 - Dummy::Subs
 - use CPAN standards for distribution packages
 - add notes in readme about getting set up
