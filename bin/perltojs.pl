@@ -24,7 +24,7 @@ my @arguments = @ARGV[1 .. $#ARGV];
 my %commands = (
 	bundle => sub {
 		PerlToJs::getBundleJs(
-			includes => $includes,
+			includes => [@INC, @$includes],
 			modules => \@arguments,
 		);
 	},

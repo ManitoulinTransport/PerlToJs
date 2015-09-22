@@ -22,7 +22,7 @@ sub getBundleJs {
 	
 	# Process input parameters
 	croak "No module(s) were specified" unless @modules;
-	@includes = (@INC, PerlToJs::Constants::BASE_PATH . '/Perlito/src5/lib', @includes);
+	@includes = (PerlToJs::Constants::BASE_PATH . '/Perlito/src5/lib', @includes);
 	for (my $i = 0; $i < scalar @includes; $i++){
 		-d $includes[$i] or croak "Include path '$includes[$i]' doesn't exist";
 		$includes[$i] = Cwd::abs_path($includes[$i]);
