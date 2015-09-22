@@ -34,10 +34,10 @@ my %commands = (
 	help => sub {
 		"
 Usage:
-  perl-to-js.pl bundle <module>... [--include <directory>]... [--output <file>]
-  perl-to-js.pl interface [--output <file>]
-  perl-to-js.pl help [--output <file>]
-  perl-to-js.pl version [--output <file>]
+  $0 bundle <module>... [--include <directory>]... [--output <file>]
+  $0 interface [--output <file>]
+  $0 help [--output <file>]
+  $0 version [--output <file>]
 
 Options:
   --include <directory>		an \@INC directory (any number allowed)

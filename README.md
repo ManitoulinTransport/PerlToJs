@@ -17,13 +17,13 @@ This package is currently powered by [Perlito](https://github.com/fglock/Perlito
 #### bundling using the CLI
 
 ```
-$ perl-to-js.pl help
+$ perltojs.pl help
 
 Usage:
-  perl-to-js.pl bundle <module>... [--include <directory>]... [--output <file>]
-  perl-to-js.pl interface [--output <file>]
-  perl-to-js.pl help [--output <file>]
-  perl-to-js.pl version [--output <file>]
+  perltojs.pl bundle <module>... [--include <directory>]... [--output <file>]
+  perltojs.pl interface [--output <file>]
+  perltojs.pl help [--output <file>]
+  perltojs.pl version [--output <file>]
 
 Options:
   --include <directory>         an @INC directory (any number allowed)
