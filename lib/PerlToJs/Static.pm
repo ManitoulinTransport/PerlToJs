@@ -11,7 +11,7 @@ use File::Slurp;
 use PerlToJs::Constants;
 
 # Perlito modules
-use lib PerlToJs::Constants::BASE_PATH . '/Perlito/src5/lib';
+use lib PerlToJs::Constants::PERLITO_PATH . '/src5/lib';
 use Perlito5::Javascript2::Runtime;
 use Perlito5::Javascript2::Array;
 use Perlito5::Javascript2::CORE;

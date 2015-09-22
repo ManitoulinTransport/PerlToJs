@@ -25,7 +25,7 @@ sub findModule {
 
 # Get a transpiled module, given the module path
 my %module_js = ();
-my $base_command = 'perl ' . PerlToJs::Constants::BASE_PATH . '/Perlito/perlito5.pl -Cjs --noexpand_use ';
+my $base_command = 'perl ' . PerlToJs::Constants::PERLITO_PATH . '/perlito5.pl -Cjs --noexpand_use ';
 sub getModuleJs {
 	my ($module_path, $includes) = @_;
 	unless (defined $module_js{$module_path}){
