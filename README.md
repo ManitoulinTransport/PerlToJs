@@ -51,9 +51,9 @@ Options:
 
 ## todo
 
-- `want: 'auto'`: executes in list context and simply returns the element if theres only one
-- link singlar Perlito runtime into bundle using new bundle_prefix.js (link.js -> bundle_postfix.js)
-- use generic PerlPackage.prototype.get (as opposed to PerlPackage.prototype.sub)
+- implement singular runtime+interface, include perlito compiler
+- bundle implicit dependencies (except for those in @external)
+- PerlPackage.prototype.get
 - Dummy::Subs
 - use CPAN standards for distribution packages
 - add notes in readme about getting set up
@@ -61,6 +61,5 @@ Options:
 - give perl modules a way of knowing if its running in perl, node, or the browser ("isomorphic" ability)! 
 - use node and or a headless browser for automated tests, use Travis CI
 - add support for expanding `use` statements (either here or in Perlito)
-- move Perlito runtime from each bundle to the singular PerlToJs runtime
 - support commonj-esque (i.e. node & browserify) javascript module format
 
