@@ -51,15 +51,21 @@ Options:
 
 ## todo
 
+- support for expanding `use` statements
+- support `use parent`, `use constant`
+- support `require`
+
+- expose packages on `perl`, no need for `pkg` function
+- expose `sub` AND `method` methods on PerlPackage
+- require `sub` (or `method`) args to be in the form of a list (array or hash)
+- add PerlReference class
+
 - implement singular runtime+interface, include perlito compiler
 - bundle implicit dependencies (except for those in @external)
-- PerlPackage.prototype.get
-- Dummy::Subs
+
 - use CPAN standards for distribution packages
-- add notes in readme about getting set up
-- add PerlObject class
+- documentation
 - give perl modules a way of knowing if its running in perl, node, or the browser ("isomorphic" ability)! 
 - use node and or a headless browser for automated tests, use Travis CI
-- add support for expanding `use` statements (either here or in Perlito)
 - support commonj-esque (i.e. node & browserify) javascript module format
 
