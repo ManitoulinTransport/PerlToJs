@@ -9,7 +9,7 @@ use File::Basename;
 my $base_path = Cwd::abs_path("$0/../..");
 
 File::Path::make_path("$base_path/test/build");
-`perl $base_path/bin/perltojs.pl bundle Dummy::Simple Dummy::Complex Dummy::Module --include $base_path/test/lib --output $base_path/test/build/bundle.js`;
+`perl $base_path/bin/perltojs.pl bundle Dummy::Simple Dummy::Complex Dummy::Module Dummy::Isomorphic --include $base_path/test/lib --output $base_path/test/build/bundle.js`;
 `perl $base_path/bin/perltojs.pl interface --output $base_path/test/build/interface.js`;
 globCopy("$base_path/test/assets", "$base_path/test/build", "* */*");
 

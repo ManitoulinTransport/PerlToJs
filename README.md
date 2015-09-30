@@ -51,7 +51,7 @@ Options:
 
 ## todo
 
-- support for expanding `use` statements
+- support for including `use`d packages in bundle
 - support `use parent`, `use constant`
 - support `require`
 
@@ -65,7 +65,6 @@ Options:
 
 - use CPAN standards for distribution packages
 - documentation
-- give perl modules a way of knowing if its running in perl, node, or the browser ("isomorphic" ability)! 
 - use node and or a headless browser for automated tests, use Travis CI
 - support commonj-esque (i.e. node & browserify) javascript module format
 
