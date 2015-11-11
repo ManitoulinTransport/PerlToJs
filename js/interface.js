@@ -142,12 +142,26 @@
 		this._perlito_package = this._bundle.pkgs[this.name];
 	};
 	
-	PerlPackage.prototype.sub = function(sub_name, options){
-		var perlito_sub = this._perlito_package[sub_name];
+	PerlPackage.prototype.sub = function(name, options){
+		var perlito_sub = this._perlito_package[name];
 		if (typeof perlito_sub != 'function'){
-			throw new Error("Could not find sub '" + sub_name + "' in package '" + this.name + "'");
+			throw new Error("Could not find sub '" + name + "' in package '" + this.name + "'");
 		}
 		return tojsSub(this._bundle, perlito_sub, options);
+	};
+	PerlPackage.prototype.our = function(symbol){
+		var sigil = symbol.substr(0, 1);
+		var name = symbol.substr(1);
+		switch (sigil){
+			case '$':
+				return tojsScalar(this._bundle, this._perlito_package['v_'+name]);
+			case '@': 
+				return tojsArray(this._bundle, this._perlito_package['List_'+name]);
+			case '%':
+				return tojsHash(this._bundle, this._perlito_package['Hash_'+name]);
+			default: 
+				throw new Error('"' + sigil + '" is not a valid sigil in perl');
+		}
 	};
 	
 	// `perl` object ----------------------------------------
