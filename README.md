@@ -12,9 +12,27 @@ This is desirable for at least two reasons (in context of web development):
 
 This package is currently powered by [Perlito](https://github.com/fglock/Perlito), which transpiles perl to js (among other languages) but lacks a practical interface for using your transpiled code in javascript.
 
+## installing
+
+#### for use of the CLI
+
+1. Copy the contents of this repository to somewhere in your file system
+2. Add the ./bin directory to your PATH environment variable
+
+#### for use of the API
+
+1. Copy the contents of this repository to somewhere in your project
+2. Add the ./lib directory to perl's search path with a `use lib` statement, somewhere before you `use PerlToJs`
+
 ## usage
 
-#### bundling using the CLI
+#### the build process
+
+The "bundle" operation will generate javascript code from the specified perl modules. Multiple bundles may be loaded in a javascript runtime.
+
+The "interface" operation will simply output the javascript code to provide a convenient/usable interface to those modules. Only one copy of this is necessary in a javascript runtime.
+
+##### using the CLI
 
 ```
 $ perltojs.pl help
@@ -30,11 +48,11 @@ Options:
   --output <file>               the file to write to [default: STDOUT]
 ```
 
-#### bundling using perl
+##### using the API
 
 ... See [the CLI script](https://github.com/zenflow/PerlToJs/blob/master/bin/perl-to-js.pl) for now
 
-#### the perl-js interface
+#### the PerlToJs interface
 
 ... See [the perl dummy module](https://github.com/zenflow/PerlToJs/blob/master/test/lib/Dummy/Simple.pm) and [the javascript test](https://github.com/zenflow/PerlToJs/blob/master/test/assets/tests/simple.js) for now
 
@@ -44,6 +62,10 @@ Options:
 * Perl5 v5.10.1 or higher
 
 ## changelog
+
+#### v0.0.2
+
+- Enhanced documentation
 
 #### v0.0.1
 
