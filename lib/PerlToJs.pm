@@ -53,7 +53,7 @@ sub getInterfaceJs {
 		$interface_js = 
 "/**
  * PerlToJs v$VERSION interface
- * See https://github.com/zenflow/PerlToJs
+ * See https://github.com/ManitoulinTransport/PerlToJs
  */
 
 " . PerlToJs::Static::getInterfaceJs();
